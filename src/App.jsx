@@ -81,8 +81,13 @@ function App() {
         bankInterestRate: result.interestRate,
         bankCharges: result.bankCharges
       });
+
+      // Auto-populate loan amount if found in the professional statement
+      if (result.loanAmount) {
+        setFormData(prev => ({ ...prev, loanAmount: Math.round(parseFloat(result.loanAmount)).toString() }));
+      }
     } catch (err) {
-      setError('Failed to extract data. Please enter values manually.');
+      setError('Failed to extract data. Professional statements are complex, please verify manually.');
     } finally {
       setIsParsing(false);
     }
