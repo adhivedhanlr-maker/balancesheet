@@ -207,19 +207,19 @@ function App() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
           <div className="glass-card stat-card">
             <span className="stat-label">Total Loan</span>
-            <span className="stat-value">${loanAmount.toLocaleString()}</span>
+            <span className="stat-value">₹{loanAmount.toLocaleString()}</span>
           </div>
           <div className="glass-card stat-card" style={{ borderLeft: '4px solid var(--accent)' }}>
             <span className="stat-label">Interest ({interestRate}%)</span>
-            <span className="stat-value">${estimatedInterest.toLocaleString()}</span>
+            <span className="stat-value">₹{estimatedInterest.toLocaleString()}</span>
           </div>
           <div className="glass-card stat-card">
             <span className="stat-label">Expenses</span>
-            <span className="stat-value">${calculatedExpenses.toLocaleString()}</span>
+            <span className="stat-value">₹{calculatedExpenses.toLocaleString()}</span>
           </div>
           <div className="glass-card stat-card" style={{ background: 'var(--accent-soft)' }}>
             <span className="stat-label">Total Liability</span>
-            <span className="stat-value" style={{ color: 'var(--accent)' }}>${totalLiabilities.toLocaleString()}</span>
+            <span className="stat-value" style={{ color: 'var(--accent)' }}>₹{totalLiabilities.toLocaleString()}</span>
           </div>
         </div>
 
@@ -291,24 +291,24 @@ function App() {
             <tbody>
               <tr>
                 <td style={{ padding: '1rem 0' }}>Principal Loan Amount</td>
-                <td style={{ padding: '1rem 0', textAlign: 'right', fontWeight: 600 }}>${loanAmount.toLocaleString()}</td>
+                <td style={{ padding: '1rem 0', textAlign: 'right', fontWeight: 600 }}>₹{loanAmount.toLocaleString()}</td>
               </tr>
               <tr>
                 <td style={{ padding: '1rem 0' }}>Estimated Bank Interest</td>
-                <td style={{ padding: '1rem 0', textAlign: 'right', fontWeight: 600 }}>${estimatedInterest.toLocaleString()}</td>
+                <td style={{ padding: '1rem 0', textAlign: 'right', fontWeight: 600 }}>₹{estimatedInterest.toLocaleString()}</td>
               </tr>
               <tr>
                 <td style={{ padding: '1rem 0' }}>Extracted Bank Charges</td>
-                <td style={{ padding: '1rem 0', textAlign: 'right', fontWeight: 600 }}>${bankCharges.toLocaleString()}</td>
+                <td style={{ padding: '1rem 0', textAlign: 'right', fontWeight: 600 }}>₹{bankCharges.toLocaleString()}</td>
               </tr>
               <tr>
                 <td style={{ padding: '1rem 0' }}>Calculated Expenses ({expensesPercent}%)</td>
-                <td style={{ padding: '1rem 0', textAlign: 'right', fontWeight: 600 }}>${calculatedExpenses.toLocaleString()}</td>
+                <td style={{ padding: '1rem 0', textAlign: 'right', fontWeight: 600 }}>₹{calculatedExpenses.toLocaleString()}</td>
               </tr>
               <tr style={{ borderTop: '2px solid var(--border)' }}>
                 <td style={{ padding: '1.5rem 0', fontWeight: 700, fontSize: '1.1rem' }}>Total Liabilities</td>
                 <td style={{ padding: '1.5rem 0', textAlign: 'right', fontWeight: 700, fontSize: '1.1rem', color: 'var(--accent)' }}>
-                  ${totalLiabilities.toLocaleString()}
+                  ₹{totalLiabilities.toLocaleString()}
                 </td>
               </tr>
             </tbody>

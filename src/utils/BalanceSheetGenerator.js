@@ -51,7 +51,7 @@ export function generateBalanceSheetPDF(data) {
         y += 10;
     };
 
-    drawRow('LIABILITIES', 'Amount ($)', true);
+    drawRow('LIABILITIES', 'Amount (₹)', true);
     drawRow('Principal Loan Amount', parseFloat(data.loanAmount || 0).toLocaleString());
     drawRow('Outstanding Interest', parseFloat(data.estimatedInterest || 0).toLocaleString());
     drawRow('Bank Charges', parseFloat(data.bankCharges || 0).toLocaleString());
@@ -65,7 +65,7 @@ export function generateBalanceSheetPDF(data) {
     drawRow('TOTAL LIABILITIES', totalLiabilities.toLocaleString(), false, true);
 
     y += 10;
-    drawRow('ASSETS', 'Amount ($)', true);
+    drawRow('ASSETS', 'Amount (₹)', true);
     drawRow('Loan Principal (Asset)', parseFloat(data.loanAmount || 0).toLocaleString());
     drawRow('TOTAL ASSETS', parseFloat(data.loanAmount || 0).toLocaleString(), false, true);
 
@@ -92,14 +92,14 @@ export function generateBalanceSheetExcel(data) {
         ['Generated on:', new Date().toLocaleDateString()],
         ['Address:', data.address || 'N/A'],
         [],
-        ['LIABILITIES', 'AMOUNT ($)'],
+        ['LIABILITIES', 'AMOUNT (₹)'],
         ['Principal Loan Amount', parseFloat(data.loanAmount || 0)],
         ['Outstanding Interest', parseFloat(data.estimatedInterest || 0)],
         ['Bank Charges', parseFloat(data.bankCharges || 0)],
         ['Operating Expenses', parseFloat(data.calculatedExpenses || 0)],
         ['TOTAL LIABILITIES', totalLiabilities],
         [],
-        ['ASSETS', 'AMOUNT ($)'],
+        ['ASSETS', 'AMOUNT (₹)'],
         ['Loan Principal', parseFloat(data.loanAmount || 0)],
         ['TOTAL ASSETS', parseFloat(data.loanAmount || 0)],
     ];

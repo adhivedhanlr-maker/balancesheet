@@ -32,12 +32,12 @@ function extractDetails(text) {
         /Rate\s*of\s*Interest[:\s]*(\d+\.?\d*)\s*%/i
     ];
 
-    // Regex patterns for bank charges (e.g., "Bank Charges: 50.00", "Service Fee $100")
+    // Regex patterns for bank charges (e.g., "Bank Charges: 50.00", "Service Fee ₹100")
     const chargesPatterns = [
-        /bank\s*charges[:\s]*\$?([\d,]+\.?\d*)/i,
-        /service\s*(?:fee|charge)[:\s]*\$?([\d,]+\.?\d*)/i,
-        /processing\s*fee[:\s]*\$?([\d,]+\.?\d*)/i,
-        /Total\s*Charges[:\s]*\$?([\d,]+\.?\d*)/i
+        /bank\s*charges[:\s]*(?:₹|\$)?([\d,]+\.?\d*)/i,
+        /service\s*(?:fee|charge)[:\s]*(?:₹|\$)?([\d,]+\.?\d*)/i,
+        /processing\s*fee[:\s]*(?:₹|\$)?([\d,]+\.?\d*)/i,
+        /Total\s*Charges[:\s]*(?:₹|\$)?([\d,]+\.?\d*)/i
     ];
 
     let interestRate = null;
