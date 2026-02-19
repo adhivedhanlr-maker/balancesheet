@@ -77,20 +77,29 @@ function App() {
 
     try {
       const result = await parsePDF(file);
+      const itemsFound = [result.interestRate, result.bankCharges, result.loanAmount].filter(Boolean).length;
+
       setExtractedData({
         bankInterestRate: result.interestRate,
         bankCharges: result.bankCharges
       });
 
-      // Auto-populate loan amount if found in the professional statement
       if (result.loanAmount) {
         setFormData(prev => ({ ...prev, loanAmount: Math.round(parseFloat(result.loanAmount)).toString() }));
       }
+
+      if (itemsFound === 0) {
+        setError('No extraction matches found. All fields available for manual entry.');
+      } else {
+        setError('Data extracted successfully. Please verify values below.');
+      }
     } catch (err) {
-      setError('Failed to extract data. Professional statements are complex, please verify manually.');
+      setError('Could not read PDF. You can still enter details manually below.');
+      console.warn("Silent failure in UI:", err);
     } finally {
       setIsParsing(false);
     }
+
   };
 
   const exportActions = {
@@ -127,7 +136,7 @@ function App() {
 
           <div className="input-group">
             <label>
-              <DollarSign size={14} /> Loan Amount
+              <span style={{ marginRight: '0.25rem' }}>₹</span> Loan Amount
               <span className="tooltip"><Info size={12} /><span className="tooltip-text">Total principal amount for renewal</span></span>
             </label>
             <input
@@ -164,7 +173,10 @@ function App() {
               />
               <div style={{ pointerEvents: 'none' }}>
                 {isParsing ? (
-                  <div className="animate-pulse-soft">Extracing Data...</div>
+                  <div className="animate-pulse-soft" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <Activity size={18} className="animate-spin" />
+                    <span>Analyzing PDF...</span>
+                  </div>
                 ) : fileName ? (
                   <span style={{ color: 'var(--accent)', fontWeight: 600 }}>{fileName}</span>
                 ) : (
@@ -178,10 +190,21 @@ function App() {
           </div>
 
           {error && (
-            <div style={{ color: 'var(--error)', fontSize: '0.75rem', background: 'rgba(244, 63, 94, 0.1)', padding: '0.75rem', borderRadius: '0.5rem' }}>
-              <AlertCircle size={14} inline /> {error}
+            <div style={{
+              color: error.includes('successfully') ? 'var(--success)' : 'var(--text-secondary)',
+              fontSize: '0.75rem',
+              background: error.includes('successfully') ? 'rgba(16, 185, 129, 0.1)' : 'rgba(148, 163, 184, 0.1)',
+              padding: '0.75rem',
+              borderRadius: '0.5rem',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              border: `1px solid ${error.includes('successfully') ? 'rgba(16, 185, 129, 0.2)' : 'rgba(148, 163, 184, 0.2)'}`
+            }}>
+              {error.includes('successfully') ? <ChevronRight size={14} /> : <Info size={14} />} {error}
             </div>
           )}
+
         </div>
 
         <div style={{ marginTop: 'auto', padding: '1rem', background: 'rgba(0,0,0,0.1)', borderRadius: '1rem' }}>

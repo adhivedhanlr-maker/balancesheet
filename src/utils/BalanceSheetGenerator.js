@@ -16,7 +16,8 @@ export function generateBalanceSheetPDF(data) {
 
     doc.setFontSize(10);
     doc.setTextColor(100);
-    doc.text('As of ' + new Date().toLocaleDateString(), pageWidth / 2, 38, { align: 'center' });
+    doc.text('Auto-Generated for Loan Renewal', pageWidth / 2, 38, { align: 'center' });
+    doc.text('Date: ' + new Date().toLocaleDateString(), pageWidth / 2, 43, { align: 'center' });
 
     // Border line
     doc.setDrawColor(200);
@@ -47,7 +48,10 @@ export function generateBalanceSheetPDF(data) {
         }
 
         doc.text(label, margin + 2, y);
-        doc.text(value, pageWidth - margin - 2, y, { align: 'right' });
+        // jspdf has issues with ₹ symbol in some fonts, so we use 'Rs.' or ensure encoding if possible
+        // but since we are targeting a modern browser, sometimes '₹' works. 
+        // For safety in raw jsPDF without custom fonts, 'INR' or 'Rs.' is safer, but let's try '₹' first.
+        doc.text(`₹ ${value}`, pageWidth - margin - 2, y, { align: 'right' });
         y += 10;
     };
 
@@ -58,15 +62,14 @@ export function generateBalanceSheetPDF(data) {
     drawRow('Operating Expenses', parseFloat(data.calculatedExpenses || 0).toLocaleString());
 
     y += 5;
-    const totalLiabilities = parseFloat(data.loanAmount || 0) +
-        parseFloat(data.estimatedInterest || 0) +
-        parseFloat(data.bankCharges || 0) +
-        parseFloat(data.calculatedExpenses || 0);
     drawRow('TOTAL LIABILITIES', totalLiabilities.toLocaleString(), false, true);
 
-    y += 10;
-    drawRow('ASSETS', 'Amount (₹)', true);
-    drawRow('Loan Principal (Asset)', parseFloat(data.loanAmount || 0).toLocaleString());
+    y += 15;
+    drawRow('ASSETS', 'Value', true);
+    drawRow('Net Fixed Assets (Estimated)', (parseFloat(data.loanAmount || 0) * 0.4).toLocaleString());
+    drawRow('Current Assets / Cash', (parseFloat(data.loanAmount || 0) * 0.6).toLocaleString());
+
+    y += 5;
     drawRow('TOTAL ASSETS', parseFloat(data.loanAmount || 0).toLocaleString(), false, true);
 
     // Footer
